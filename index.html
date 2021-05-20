@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>The Hangman Game</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+		integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="style.css" />
+	<script src="hangman-game.js"></script>
+</head>
+
+<body onload="pageLoaded();">
+	<div class="container">
+		<h1>A Hangman Game</h1>
+		<p>
+			A program to guess at words and phrases; built in the Wheel of Fortune
+			style
+		</p>
+	</div>
+	<br />
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				<div id="pick-game-controls">
+					<button type="button" class="btn btn-primary btn-block"  onclick="toggleGame(1);">
+						Start New Word Game
+					</button>
+					<button type="button" class="btn btn-primary btn-block"  onclick="toggleGame(2);">
+						Start New Phrase Game
+					</button>
+					<button type="button" class="btn btn-primary btn-block" onclick="testSomething()">
+						Test
+					</button>
+					</div>
+				<div id="play-game-controls">
+					<div id="guess-buttons">
+						<button type="button" class="btn btn-outline-primary"  onclick="toggleGame(0);">
+							A
+						</button>
+					</div>
+					<br /><br />
+					<button type="button" class="btn btn-primary btn-block"  onclick="toggleGame(0);">
+						End Game
+					</button>
+				</div>
+				<!-- <label for="expression-input" class="form-label">Edit or Enter Row numbers - 0 for Unknown
+					Numbers.</label> -->
+				<!-- <input class="form-control form-control-lg" type="text" id="expression-input"
+					placeholder="Enter Expression" /> -->
+			</div>
+			<div class="col-sm-8">
+				<div class="row" id="puzzle-row">
+					<!-- <div class="col-sm-1 no-gutter">
+						<div class="card tile text-center">
+							<h1 class="card-title">A</h2>
+						</div>
+					</div> -->
+					<!-- <div class="col-sm-1 no-gutter">
+						<div class="card tile text-center">
+							<h1 class="card-title">B</h2>
+						</div>
+					</div> -->
+				</div>
+			</div>
+		</div>
+		<!-- End row div -->
+	</div>
+	<!-- End container for the main area -->
+	<br />
+</body>
+
+</html>
