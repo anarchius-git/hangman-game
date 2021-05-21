@@ -14,3 +14,12 @@
 .btn-spaced{
     margin: 2px;
 }
+
+.hangman-sol{
+    font-size: 25px;
+    color: lightgray;
+}
+
+.lit-sol{
+    color: red;
+}
