@@ -3,7 +3,7 @@
 
 <head>
 	<title>The Hangman Game</title>
-	<meta charset="utf-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
@@ -19,8 +19,7 @@
 	<div class="container">
 		<h1>A Hangman Game</h1>
 		<p>
-			A program to guess at words and phrases; built in the Wheel of Fortune
-			style
+			A program to guess words and phrases; #hangman #wheeloffortune
 		</p>
 	</div>
 	<br />
@@ -29,51 +28,63 @@
 		<div class="row">
 			<div class="col-md-4">
 				<div id="pick-game-controls">
-					<button type="button" class="btn btn-primary btn-block"  onclick="toggleGame(1);">
+					<button type="button" class="btn btn-primary btn-block" onclick="toggleGame(1);">
 						Start New Word Game
 					</button>
-					<button type="button" class="btn btn-primary btn-block"  onclick="toggleGame(2);">
-						Start New Phrase Game
+					<br />
+					<p>Or you can select a game from Wheel of Fortune (Seasons 1 to 5)</p>
+					<button type="button" class="btn btn-primary btn-block" onclick="toggleGame(2);">
+						Start Game with Phrases
 					</button>
-					<button type="button" class="btn btn-primary btn-block" onclick="testSomething()">
-						Test
+					<button type="button" class="btn btn-primary btn-block" onclick="toggleGame(3);">
+						Start Game with Thing(s)
 					</button>
-					</div>
-				<div id="play-game-controls">
+					<button type="button" class="btn btn-primary btn-block" onclick="toggleGame(4);">
+						Start Game with Place(s)
+					</button>
+				</div>
+				<div id="play-game-controls" style="display: none">
 					<div id="guess-buttons">
-						<button type="button" class="btn btn-outline-primary"  onclick="toggleGame(0);">
-							A
-						</button>
+						&nbsp;
 					</div>
-					<br /><br />
-					<button type="button" class="btn btn-primary btn-block"  onclick="toggleGame(0);">
+					<br />
+					<div class="row justify-content-center" id="hangman-misses">
+						&nbsp;
+					</div>
+					<br />
+					<button type="button" class="btn btn-primary btn-block" onclick="toggleGame(0);"
+						id="btn-end-new-game">
 						End Game
 					</button>
 				</div>
-				<!-- <label for="expression-input" class="form-label">Edit or Enter Row numbers - 0 for Unknown
-					Numbers.</label> -->
-				<!-- <input class="form-control form-control-lg" type="text" id="expression-input"
-					placeholder="Enter Expression" /> -->
 			</div>
 			<div class="col-sm-8">
+				<div class="alert alert-danger alert-dismissible fade show" role="alert" id="lost-alert"
+					style="display: none;">
+					<strong>Oh No! You lost!</strong> Maybe try again with another puzzle? Click Start New Game to
+					continue.
+					<button type="button" class="close" aria-label="Close" onclick="$('.alert').fadeOut()">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="alert alert-success alert-dismissible fade show" role="alert" id="won-alert"
+					style="display: none;">
+					<strong>Yay, you solved it!</strong> Think it is time to play another puzzle. Click Start New Game
+					to continue.
+					<button type="button" class="close" aria-label="Close" onclick="$('.alert').fadeOut()">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+
 				<div class="row" id="puzzle-row">
-					<!-- <div class="col-sm-1 no-gutter">
-						<div class="card tile text-center">
-							<h1 class="card-title">A</h2>
-						</div>
-					</div> -->
-					<!-- <div class="col-sm-1 no-gutter">
-						<div class="card tile text-center">
-							<h1 class="card-title">B</h2>
-						</div>
-					</div> -->
+					&nbsp;
 				</div>
 			</div>
 		</div>
 		<!-- End row div -->
 	</div>
 	<!-- End container for the main area -->
-	<br />
 </body>
 
 </html>
