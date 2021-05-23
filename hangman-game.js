@@ -6,6 +6,7 @@ globalThingList = ["CONSTRUCTIVE CRITICISM",	"BIRTH CERTIFICATE",	"FALSE EYELASH
 globalPlaceList = ["SEAFOOD RESTAURANT",	"THE PEOPLE'S REPUBLIC OF CHINA",	"PHILADELPHIA PENNSYLVANIA",	"MASONIC TEMPLE",	"PROVIDENCE RHODE ISLAND",	"DETROIT MICHIGAN",	"BARGAIN BASEMENT",	"GULF OF MEXICO",	"BOWLING ALLEY",	"NEW ORLEANS LOUISIANA",	"DUBLIN IRELAND",	"NEW ENGLAND STATES",	"NIAGARA FALLS",	"THE PAINTED DESERT",	"INDIAN RESERVATION",	"HOLY ROMAN EMPIRE",	"WESTERN HEMISPHERE",	"LIMA PERU",	"LAKE SUPERIOR",	"NORTH AMERICA",	"LINCOLN NEBRASKA",	"NASHVILLE TENNESSEE",	"FLEA MARKET",	"MADISON SQUARE GARDEN",	"SAN JUAN PUERTO RICO",	"CLEVELAND OHIO",	"BOSTON MASSACHUSETTS",	"MEMPHIS TENNESSEE",	"MILWAUKEE WISCONSIN",	"SEA OF GALILEE",	"MINNEAPOLIS-ST PAUL",	"SALT LAKE CITY UTAH",	"EIGHTEEN-HOLE GOLF COURSE",	"HOT SPRINGS ARKANSAS",	"DENVER COLORADO",	"METROPOLITAN MUSEUM OF ART",	"PEARL HARBOR",	"FORT KNOX",	"PIZZA PARLOR",	"ORLANDO FLORIDA",	"KEY WEST FLORIDA",	"WICHITA KANSAS",	"BOTANICAL GARDEN",	"CONSTRUCTION SITE",	"CARMEL CALIFORNIA",	"BUFFALO NEW YORK",	"BARCELONA SPAIN",	"HOLLYWOOD FLORIDA",	"FISHERMAN'S WHARF",	"MISSION CONTROL CENTER",	"FIVE-AND-TEN-CENT STORE",	"JFK INTERNATIONAL AIRPORT",	"SWAMPLAND IN FLORIDA",	"GAS STATION",	"MOVIE THEATER",	"EMERGENCY EXIT",	"WISHING WELL",	"THIRD WORLD COUNTRIES",	"BILLINGS MONTANA",	"AMERICAN STOCK EXCHANGE",	"HOUSING DEVELOPMENT",	"CAIRO EGYPT",	"TOKYO JAPAN",	"MICHIGAN STATE UNIVERSITY",	"IVY LEAGUE COLLEGE"];
 gameRunning = false;
 gameFinished = false;
+revealSpeed = 100;
 gamePrompt = ""; // The current prompt, taking into account the guesses and the answer
 gameAnswer = ""; // The answer being guessed
 gameGuessed = []; // This is going to be an array of 26 spaces representing the 26 letters of the English alphabet
@@ -66,7 +67,7 @@ function toggleGame(varGameType){
 			break;
 	
 	}
-	console.log(gameAnswer); // DEBUG delete this after testing.
+	//console.log(gameAnswer); // DEBUG delete this after testing.
 	refreshPage();
 }
 
@@ -149,11 +150,16 @@ function processGuess(){
 		// Do something intersting in the UI
 		$("#btn-end-new-game").text("Start New Game");
 		$("#lost-alert").fadeIn();
+		revealSpeed = 500;
 	}
 
 	maskAnswer();
 	checkForWin();
 	refreshPage();
+
+	if(gameFinished){
+		revealAnswer();
+	}
 }
 
 function checkForWin(){
@@ -170,6 +176,8 @@ function checkForWin(){
 		// Do something interesting in the UI showing the user won the game
 		$("#btn-end-new-game").text("Start New Game");
 		$("#won-alert").fadeIn();
+		revealSpeed = 10;
+		revealAnswer();
 	}
 }
 
@@ -244,7 +252,7 @@ function redrawGuessBoard(){
 				htmlCode = boardCharacter;
 		}
 		var colDiv = document.createElement("div");
-		$(colDiv).addClass("col-sm-1").addClass("no-gutter");
+		$(colDiv).addClass("col-sm-1").addClass("no-gutter").addClass("tile-parent");
 
 		var cardDiv = document.createElement("div");
 		$(cardDiv).addClass("card").addClass("tile").addClass("text-center");
@@ -274,14 +282,26 @@ function redrawMissBoard(){
 		$(errorDiv).html("&osol;");
 		$(divHangmanMiss).append(errorDiv);
 	}
-	//for(var i = 0; i < 8; i++){
-	//	var divHandle = document.getElementById("sol-" + (i + 1));
-	//	$(divHandle).removeClass("lit-sol");
-	//}
-	//if(guessMissCount > 0){
-	//	for(var i =0; i < guessMissCount; i++){
-	//		var divHandle = document.getElementById("sol-" + (i + 1));
-	//		$(divHandle).addClass("lit-sol");
-	//	}
-	//}
+}
+
+function revealAnswer(){
+	// This is the final call to reveal the answer. Called either with the win or with the loss.
+	// Hide the parent div
+	$("#puzzle-row").hide();
+	// Redraw the Answer
+	gamePrompt = gameAnswer;
+	redrawGuessBoard();
+	// Hide the Cards
+	$(".tile-parent").hide();
+	// Show the parent Div
+	$("#puzzle-row").show();
+
+	// Display the cards, one-by-one
+	// https://www.paulirish.com/2008/sequentially-chain-your-callbacks-in-jquery-two-ways/
+	// Had to add in the "card-parent" class to have a set of peers so that this can work with the code below.
+	(function showAnswer(elem){
+		elem.fadeIn(revealSpeed,function(){
+		  $(this).next().length && showAnswer($(this).next());
+		});
+	  })( $(".tile-parent:first") );
 }
